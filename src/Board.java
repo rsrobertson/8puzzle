@@ -7,6 +7,8 @@ import edu.princeton.cs.algs4.Stack;
 //Hours
     //2 setting up solution understanding problem
     //4 coding intial methods, researching A*
+    //4 coding board api
+    //2 fixing manhattan and hamming
 
 
 public class Board {
@@ -38,7 +40,7 @@ public class Board {
                 }
 
                 if(x == _n - 1 && y == _n -1)
-                    testValue = 0;
+                    break;
 
                 int tempValue = _tiles[y][x];
                 if (tempValue != testValue) {
@@ -61,15 +63,24 @@ public class Board {
                 } else {
                     testValue = (y * _n) + x + 1;
                 }
-                if(x == _n - 1 && y == _n -1)
-                    testValue = 0;
 
                 int tempValue = _tiles[y][x];
 
-                if (tempValue < testValue)
-                    manhattan += testValue - tempValue;
-                else
-                    manhattan += tempValue - testValue;
+                if(tempValue == 0)
+                    continue;
+
+                if(tempValue != testValue){
+
+                    Point p = getProperCoordinates(tempValue);
+                    int distanceX = p.x - x;
+                    int distanceY = p.y - y;
+                    if(distanceX < 0)
+                        distanceX = distanceX * -1;
+                    if(distanceY < 0)
+                        distanceY = distanceY * -1;
+                    manhattan += distanceX;
+                    manhattan += distanceY;
+                }
             }
         }
 
@@ -202,6 +213,30 @@ public class Board {
         }
 
         return boards;
+
+    }
+
+    private Point getProperCoordinates(int a){
+        int x,y;
+        if(a < _n)
+        {
+            x = a - 1;
+            y = 0;
+            return new Point(x,y);
+        }
+
+        y = a / _n;
+        if( a % _n != 0)
+            y++;
+
+        x = a % _n;
+        if(x == 0)
+            x = _n;
+
+        y--;
+        x--;
+
+        return new Point(x,y);
 
     }
 

@@ -1,13 +1,31 @@
 /**
  * Created by rsraloha on 5/26/17.
  */
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.Console;
+import java.io.File;
 
 public class BoardTest {
+
+    private Board LoadBoard(String fileName) {
+        String home = System.getProperty("user.home");
+        File f = new File(home + "/Documents/AlgorithmsPart1/8puzzle/8puzzle/" + fileName);
+        In in = new In(f);
+        int n = in.readInt();
+        int[][] blocks = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                blocks[i][j] = in.readInt();
+            }
+        }
+
+        return new Board(blocks);
+
+    }
 
     @Test
     public void cTorTest(){
@@ -19,6 +37,19 @@ public class BoardTest {
 
         Board b = new Board(blocks);
         Assert.assertEquals(b.dimension(),3);
+    }
+
+    @Test
+    public void hammingPuzzle4Test(){
+        Board board = LoadBoard("puzzle04.txt");
+        Assert.assertEquals(board.hamming(),4);
+
+    }
+    @Test
+    public void manhattanPuzzle4Test(){
+        Board board = LoadBoard("puzzle04.txt");
+        Assert.assertEquals(board.manhattan(),4);
+
     }
 
     @Test
