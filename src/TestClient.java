@@ -9,7 +9,7 @@ public class TestClient {
 
     public static void main(String[] args) {
         String home = System.getProperty("user.home");
-        File f = new File(home + "/Documents/AlgorithmsPart1/8puzzle/8puzzle/input10.txt");
+        File f = new File(home + "/Documents/AlgorithmsPart1/8puzzle/8puzzle/puzzle2x2-01.txt");
         if (!f.exists()) {
 
             return;

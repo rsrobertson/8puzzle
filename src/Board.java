@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.Stack;
+import java.util.Arrays;
 
 /**
  * Created by rsraloha on 5/23/17.
@@ -110,35 +111,54 @@ public class Board {
 
     private void swap2(int[][] temp){
 
-        Integer prev = null;
         for(int y = 0; y < temp.length;y++)
         {
             for(int x = 0; x < temp.length;x++){
 
-                if(prev == null)
+                int currentValue = temp[y][x];
+                if(currentValue != 0)
                 {
-                    prev = temp[y][x];
-                    continue;
+                    //try four neighbors till you find a non zero value then perform swap
+                    //try right
+                    if(x < temp.length - 1)
+                    {
+                        int swapValue = temp[y][x + 1];
+                        if(swapValue != 0){
+                            temp[y][x] = swapValue;
+                            temp[y][x + 1] = currentValue;
+                            return;
+                        }
+                    }
+                    //try left
+                    if(x > 0){
+                        int swapValue = temp[y][x - 1];
+                        if(swapValue != 0){
+                            temp[y][x] = swapValue;
+                            temp[y][x - 1] = currentValue;
+                            return;
+                        }
+                    }
+                    //try below
+                    if(y < temp.length - 1){
+                        int swapValue = temp[y + 1][x];
+                        if(swapValue != 0){
+                            temp[y][x] = swapValue;
+                            temp[y + 1][x] = currentValue;
+                            return;
+                        }
+                    }
+                    //try above
+                    if(y > 0){
+                        int swapValue = temp[y - 1][x];
+                        if(swapValue != 0){
+                            temp[y][x] = swapValue;
+                            temp[y - 1][x] = currentValue;
+                            return;
+                        }
+                    }
+
                 }
 
-                int prevX = x - 1;
-                int prevY = y;
-
-                if(prevX < 0 && prevY > 0)
-                {
-                    prevX = temp.length - 1;
-                    prevY = y - 1;
-                    prev = temp[prevY][prevX];
-                }
-
-                int cur = temp[y][x];
-                if(prev != 0 && cur != 0)
-                {
-                    int t = cur;
-                    temp[y][x] = prev;
-                    temp[prevY][prevX] = cur;
-                    return;
-                }
             }
 
         }
@@ -153,13 +173,7 @@ public class Board {
         if (other.getClass() != this.getClass()) return false;
         Board that = (Board) other;
 
-        if(this.dimension() == that.dimension() &&
-                this.hamming() == that.hamming() &&
-                this.manhattan() == that.manhattan()
-                )
-            return true;
-
-        return false;
+        return Arrays.deepEquals(this._tiles,that._tiles);
 
     }
 

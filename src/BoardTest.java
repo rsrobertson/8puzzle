@@ -98,12 +98,14 @@ public class BoardTest {
     }
     @Test
     public void twinTest(){
-        int[][] blocks = {
-                {1,2,3},
-                {4,5,6},
-                {7,8,0}
-        };
-        Board b = new Board(blocks);
+//        int[][] blocks = {
+//                {1,2,3},
+//                {4,5,6},
+//                {7,8,0}
+//        };
+
+
+        Board b = LoadBoard("puzzle2x2-unsolvable1.txt");
         Board twin = b.twin();
         Assert.assertEquals(twin.hamming(), 2);
     }
